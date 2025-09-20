@@ -1,6 +1,6 @@
 import { Paper, Button, Box, Typography } from "@mui/material";
 import { SearchFilter, CategoryFilter } from "@/components";
-import { PriceRangeFilter }  from "./filters/PriceRangeFilter";
+import { PriceRangeFilter } from "./filters/PriceRangeFilter";
 import { useDispatch } from "react-redux";
 import { resetFilters } from "@/store";
 
@@ -9,7 +9,7 @@ export default function Filters() {
   return (
     <Paper sx={{ height: "100%", p: 3 }} elevation={3}>
       <Typography variant="h6" sx={{ pb: 2 }}>
-         Filtros
+        Filtros
       </Typography>
 
       {/* Filtro de texto */}

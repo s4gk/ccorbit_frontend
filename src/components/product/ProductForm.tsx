@@ -3,15 +3,26 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, MenuItem } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { addProduct } from '@/store';
 import type { Product } from '@/types/product';
+import { selectCategories } from '@/store/selectors';
 
-const categories = ['Ropa', 'Hogar', 'Electrónica'];
 
-export default function ProductForm() {
+interface ProductFormProps {
+  onSuccess?: () => void;
+}
+
+export default function ProductForm({ onSuccess }: ProductFormProps) {
   const dispatch = useAppDispatch();
-  const [form, setForm] = useState({ name: '', description: '', price: '', category: categories[0] });
+  const categories = useAppSelector(selectCategories);
+
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    price: '',
+    category: categories[0] || '',
+  });
 
   function handleChange<K extends keyof typeof form>(k: K, value: string) {
     setForm(prev => ({ ...prev, [k]: value }));
@@ -27,7 +38,9 @@ export default function ProductForm() {
       category: form.category,
     };
     dispatch(addProduct(newProduct));
-    setForm({ name: '', description: '', price: '', category: categories[0] });
+    setForm({ name: '', description: '', price: '', category: categories[0] || '' });
+
+    if (onSuccess) onSuccess();
   }
 
   return (

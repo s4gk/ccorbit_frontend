@@ -5,10 +5,10 @@ export const selectProducts = (state: RootState) => state.products.items;
 export const selectFilters = (state: RootState) => state.filters;
 
 
-export const selectCategories = createSelector([selectProducts], (products) => {
-  const categories = products.map((p) => p.category);
+export const selectCategories = (state: RootState): string[] => {
+  const categories = state.products.items.map(p => p.category);
   return Array.from(new Set(categories));
-});
+};
 
 export const selectFilteredProducts = createSelector(
   [selectProducts, selectFilters],
